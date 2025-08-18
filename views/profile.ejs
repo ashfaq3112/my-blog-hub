@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>My Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <%- include("partials/navbar") %>
+
+  <div class="container mt-5">
+    <h1 class="mb-4 text-center">👤 My Profile</h1>
+    <%- include("partials/alerts") %>
+
+    <!-- User Info Card -->
+    <div class="card shadow-sm mb-5 p-4 text-center">
+      <img   src="<%= user.profilepic ? '/images/uploads/'+ user.profilepic : '/images/default-profile.png' %>" 
+           alt="Profile Picture" class="profile-pic mb-3">
+
+      <h3><%= user.name %></h3>
+      <p class="text-muted">@<%= user.username %></p>
+      <p>Email: <%= user.email %></p>
+      <p>Age: <%= user.age %></p>
+
+      <form action="/user/profilepicture" method="GET">
+        <button class="btn btn-outline-primary mt-2">Change Profile Picture</button>
+      </form>
+    </div>
+
+    <!-- User Blogs Section -->
+    <h2 class="mb-4">📝 My Blogs</h2>
+    <div class="row">
+      <% if (user.posts && user.posts.length > 0) { %>
+        <% user.posts.forEach(post => { %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <img src="/images/uploads/<%= post.thumbnail || 'default-blog.jpg' %>" 
+                   class="card-img-top" style="height:200px; object-fit:cover;">
+
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text text-muted"><%= post.content.substring(0, 80) %>...</p>
+
+                <div class="mt-auto">
+                  <a href="/blogs/<%= post._id %>" class="btn btn-sm btn-outline-primary">View</a>
+                  <a href="/blogs/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="/blogs/delete/<%= post._id %>" class="btn btn-sm btn-danger"
+                     onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a>
+                </div>
+              </div>
+              <div class="card-footer text-muted small">
+                Created on <%= post.createdAt.toDateString() %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-center text-muted">You haven’t written any blogs yet. <a href="/blogs/create">Create one</a>!</p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light text-center py-3 mt-5">
+    <p class="mb-0">© <%= new Date().getFullYear() %> MyBlog | All Rights Reserved</p>
+  </footer>
+</body>
+</html>

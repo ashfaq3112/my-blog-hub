@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Profile Picture</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-zinc-900 text-white flex items-center justify-center min-h-screen">
+
+  <div class="bg-zinc-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-semibold mb-6 text-center">🖼️ Upload Profile Picture</h1>
+
+    <form action="/user/upload" method="post" enctype="multipart/form-data" class="space-y-4">
+      
+      <!-- File Input -->
+      <div>
+        <label class="block mb-2 text-sm font-medium">Choose an Image</label>
+        <input type="file" name="image" accept="image/*"
+               class="block w-full text-sm text-gray-300 border border-zinc-600 rounded-lg cursor-pointer bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2">
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" 
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-200">
+        Upload
+      </button>
+
+      <!-- Cancel -->
+      <a href="/user/profile" 
+         class="block text-center text-sm text-gray-400 hover:text-gray-200 transition">
+         Go back to Home
+       
+      </a>
+    </form>
+  </div>
+
+</body>
+</html>

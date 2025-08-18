@@ -1,0 +1,5 @@
+setup
+login and resgister
+logout
+post creation
+post delete
