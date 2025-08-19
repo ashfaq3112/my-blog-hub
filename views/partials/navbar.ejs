@@ -1,46 +1,61 @@
-<nav class="bg-zinc-900 shadow sticky top-0 z-50">
-  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="/" class="text-2xl font-bold text-blue-600">MyBlog</a>
+<nav class="bg-slate-950/50 backdrop-blur-lg fixed top-0 left-0 w-full z-50 shadow-lg" data-aos="fade-down">
+  <div class="container mx-auto px-6 py-4 flex items-center justify-between">
 
-    <!-- Menu (Desktop) -->
-    <div class="hidden md:flex space-x-6">
-      <a href="/" class="text-white hover:text-blue-600 transition">Home</a>
-      <a href="/blogs" class="text-white hover:text-blue-600 transition">Blogs</a>
+    <a href="/" class="text-3xl font-black tracking-tight leading-none gradient-text">MyBlog</a>
+
+    <div class="hidden md:flex items-center space-x-8">
+      <a href="/" class="glass px-4 py-2 rounded-xl font-semibold transition-colors duration-300 hover:text-white">Home</a>
+      <a href="/blogs" class="glass px-4 py-2 rounded-xl font-semibold transition-colors duration-300 hover:text-white">Blogs</a>
+
       <% if (user) { %>
-        <a href="/blogs/create" class="text-white hover:text-blue-600 transition">Create</a>
-        <a href="/user/profile" class="text-white hover:text-blue-600 transition">Profile</a>
-        <a href="/logout" class="text-red-600 hover:text-red-800 transition">Logout</a>
+        <a href="/blogs/create" class="glass px-4 py-2 rounded-xl font-semibold transition-colors duration-300 hover:text-white">Create</a>
+        <a href="/user/profile" class="glass px-4 py-2 rounded-xl font-semibold transition-colors duration-300 hover:text-white">Profile</a>
+        <a href="/logout" class="px-6 py-2 bg-gradient-to-r from-red-600 to-pink-600 rounded-xl text-white font-bold transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50">
+          Logout
+        </a>
       <% } else { %>
-        <a href="/login" class="text -white hover:text-blue-600 transition">Login</a>
-        <a href="/register" class="text-white hover:text-blue-600 transition">Register</a>
+        <a href="/login" class="glass px-6 py-2 rounded-xl text-white font-semibold transform transition-all duration-300 hover:scale-105 hover:bg-white/20">
+          Login
+        </a>
+        <a href="/register" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl text-white font-bold transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50">
+          Register
+        </a>
       <% } %>
     </div>
 
-    <!-- Mobile Menu Button -->
-    <button id="menuBtn" class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none text-2xl">
-      ☰
-    </button>
+    <div class="md:hidden flex items-center">
+      <button id="mobile-menu-btn" class="outline-none mobile-menu-button">
+        <svg class="w-8 h-8 text-gray-400 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
-  <!-- Mobile Dropdown -->
-  <div
-    id="mobileMenu"
-    class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-gray-50 border-t md:hidden"
-  >
-    <div class="px-4 py-3 space-y-2">
-      <a href="/" class="block text-gray-700 hover:text-blue-600 transition">Home</a>
-      <a href="/blogs" class="block text-gray-700 hover:text-blue-600 transition">Blogs</a>
+  <div class="hidden mobile-menu transition-all duration-300 ease-in-out bg-slate-950/50 backdrop-blur-lg">
+    <ul class="flex flex-col space-y-2 px-6 py-4">
+      <li><a href="/" class="block py-2 rounded-lg font-semibold hover:bg-white/10 transition-colors">Home</a></li>
+      <li><a href="/blogs" class="block py-2 rounded-lg font-semibold hover:bg-white/10 transition-colors">Blogs</a></li>
+      
       <% if (user) { %>
-        <a href="/blogs/create" class="block text-gray-700 hover:text-blue-600 transition">Create</a>
-        <a href="/user/profile" class="block text-gray-700 hover:text-blue-600 transition">Profile</a>
-        <a href="/logout" class="block text-red-600 hover:text-red-800 transition">Logout</a>
+        <li><a href="/blogs/create" class="block py-2 rounded-lg font-semibold hover:bg-white/10 transition-colors">Create Blog</a></li>
+        <li><a href="/user/profile" class="block py-2 rounded-lg font-semibold hover:bg-white/10 transition-colors">Profile</a></li>
+        <li><a href="/logout" class="block py-2 text-red-400 font-semibold hover:bg-white/10 rounded-lg transition-colors">Logout</a></li>
       <% } else { %>
-        <a href="/login" class="block text-gray-700 hover:text-blue-600 transition">Login</a>
-        <a href="/register" class="block text-gray-700 hover:text-blue-600 transition">Register</a>
+        <li><a href="/auth/login" class="block py-2 font-semibold hover:bg-white/10 rounded-lg transition-colors">Login</a></li>
+        <li><a href="/auth/register" class="block py-2 font-semibold hover:bg-white/10 rounded-lg transition-colors">Register</a></li>
       <% } %>
-    </div>
+    </ul>
   </div>
 </nav>
 
-<script src="/js/navbar.js"></script>
+<script>
+  const btn = document.querySelector('#mobile-menu-btn');
+  const menu = document.querySelector('.mobile-menu');
+
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+</script>

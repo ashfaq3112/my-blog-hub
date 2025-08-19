@@ -171,6 +171,8 @@ router.post("/follow/:id", authenticate, async (req, res) => {
       action,
       followersCount: userToFollow.followers.length,
       followingCount: currentUser.following.length,
+      following: currentUser.following.includes(userToFollow._id)
+      
     });
   } catch (err) {
     console.error("Error in follow route:", err);

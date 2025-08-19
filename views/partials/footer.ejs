@@ -1,38 +1,12 @@
-<footer class="bg-gray-900 text-gray-300 mt-12">
-  <div class="container mx-auto px-4 py-8 grid md:grid-cols-3 gap-8">
-    <!-- About -->
-    <div>
-      <h3 class="text-xl font-semibold text-white mb-3">MyBlog</h3>
-      <p class="text-sm">
-        A simple platform to share your thoughts, ideas, and stories with the world.
-      </p>
-    </div>
-
-    <!-- Quick Links -->
-    <div>
-      <h3 class="text-xl font-semibold text-white mb-3">Quick Links</h3>
-      <ul class="space-y-2">
-        <li><a href="/" class="hover:text-white transition">Home</a></li>
-        <li><a href="/blogs" class="hover:text-white transition">Blogs</a></li>
-        <li><a href="/blogs/create" class="hover:text-white transition">Create Blog</a></li>
-        <li><a href="/user/profile" class="hover:text-white transition">Profile</a></li>
-      </ul>
-    </div>
-
-    <!-- Contact -->
-    <div>
-      <h3 class="text-xl font-semibold text-white mb-3">Contact</h3>
-      <p class="text-sm">Email: support@myblog.com</p>
-      <p class="text-sm">Follow us on:</p>
-      <div class="flex space-x-4 mt-2">
-        <a href="#" class="hover:text-white transition">🐦</a>
-        <a href="#" class="hover:text-white transition">📘</a>
-        <a href="#" class="hover:text-white transition">📸</a>
+<footer class="bg-slate-950/50 backdrop-blur-lg text-gray-400 text-center py-8 mt-12 border-t border-white/10">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between">
+      <p class="text-sm font-semibold mb-4 md:mb-0">© <%= new Date().getFullYear() %> MyBlog | All Rights Reserved</p>
+      <div class="flex space-x-6 text-sm">
+        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+        <a href="#" class="hover:text-white transition-colors">Contact</a>
       </div>
     </div>
-  </div>
-
-  <div class="bg-gray-800 text-center py-4 text-sm text-gray-400">
-    © <%= new Date().getFullYear() %> MyBlog. All rights reserved.
   </div>
 </footer>

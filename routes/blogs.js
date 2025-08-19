@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
 
 // Create Blog Form
 router.get("/create", authenticate, (req, res) => {
-  res.render("createBlog", { error: null, success: null });
+  res.render("createBlog",{profileUser:req.user,error: null, success: null });
 });
 
 // Create Blog
@@ -119,7 +119,7 @@ router.get("/:id",authenticate, async (req, res, next) => {
       .populate("user")
       .populate({
         path: "comments",
-        populate: { path: "user", select: "name profilepic" }
+        populate: { path: "user", select: "name profilepic following followers" }
       });
 
     if (!post) return res.status(404).send("Post not found");
@@ -127,7 +127,9 @@ router.get("/:id",authenticate, async (req, res, next) => {
     // ✅ Sort comments by newest first
     post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    res.render("blogDetails", { post, user: req.user || null, error: null, success: null });
+    const user = await userModel.findById(req.user.id).populate("following");
+
+    res.render("blogDetails", { post, user : user|| null, error: null, success: null });
   } catch (err) {
     next(err);
   }

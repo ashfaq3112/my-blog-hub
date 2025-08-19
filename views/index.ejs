@@ -5,58 +5,120 @@
   <title>MyBlog - Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/input.css">
 </head>
 
-<body class="bg-gradient-to-b from-gray-950 via-gray-900 to-black text-gray-200">
+<body class="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 text-gray-200 overflow-x-hidden">
 
   <%- include("partials/navbar") %>
 
   <!-- Hero Section -->
-  <header class="relative rounded-lg bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-28 text-center overflow-hidden">
-    <!-- Background Glow -->
+  <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Enhanced Background Effects -->
     <div class="absolute inset-0">
-      <div class="absolute -top-20 -left-20 w-96 h-96 bg-pink-500/30 rounded-full blur-3xl"></div>
-      <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl"></div>
+      <div class="absolute -top-32 -left-32 w-64 h-64 bg-purple-500/30 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-pink-500/30 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+      
+      <!-- Grid Pattern Overlay -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
     </div>
 
-    <div class="relative container mx-auto px-6">
-      <h1 class="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight" data-aos="fade-down">
-        Welcome to 
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-pink-400 to-red-400">MyBlog</span>
-      </h1>
-      <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-300" data-aos="fade-up">
-        Share your <span class="text-yellow-300 font-semibold">thoughts</span>, explore <span class="text-pink-300 font-semibold">ideas</span>, and inspire the <span class="text-blue-300 font-semibold">world</span> 🌍
+    <div class="relative container mx-auto px-6 text-center z-10">
+      <div class="mb-8" data-aos="fade-down">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight leading-none">
+          Welcome to 
+          <span class="block gradient-text mt-4">MyBlog</span>
+        </h1>
+      </div>
+      
+      <p class="text-lg md:text-2xl max-w-4xl mx-auto mb-12 text-gray-300 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+        Share your <span class="text-yellow-300 font-semibold">thoughts</span>, explore <span class="text-pink-300 font-semibold">ideas</span>, and inspire the <span class="text-blue-300 font-semibold">world</span> 
+        <span class="inline-block animate-bounce">🌍</span>
       </p>
 
-      <% if (!user) { %>
-        <a href="/register" class="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-lg hover:scale-105 transition inline-block" data-aos="zoom-in">Get Started</a>
-        <a href="/login" class="ml-3 px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-blue-700 transition inline-block" data-aos="zoom-in" data-aos-delay="200">Login</a>
-      <% } else { %>
-        <a href="/blogs" class="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-lg hover:scale-105 transition inline-block" data-aos="zoom-in">Explore Blogs</a>
-        <a href="/user/profile" class="ml-3 px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-blue-700 transition inline-block" data-aos="zoom-in" data-aos-delay="200">My Profile</a>
-      <% } %>
-    </div>
+      <!-- Enhanced CTAs -->
+      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16" data-aos="zoom-in" data-aos-delay="400">
+        <% if (!user) { %>
+          <a href="/register" class="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50">
+            <span class="relative z-10">Get Started</span>
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+          <a href="/login" class="glass px-8 py-4 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:bg-white/20">
+            Login
+          </a>
+        <% } else { %>
+          <a href="/blogs" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50">
+            <span class="relative z-10">Explore Blogs</span>
+          </a>
+          <a href="/user/profile" class="glass px-8 py-4 text-white font-semibold rounded-2xl transform transition-all duration-300 hover:scale-105 hover:bg-white/20">
+            My Profile
+          </a>
+        <% } %>
+      </div>
+
+      <!-- Stats Cards
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="600">
+        <div class="glass rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105">
+          <div class="text-3xl font-bold gradient-text mb-2">10K+</div>
+          <div class="text-gray-400 font-medium">Active Writers</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105">
+          <div class="text-3xl font-bold gradient-text mb-2">50K+</div>
+          <div class="text-gray-400 font-medium">Stories Shared</div>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105">
+          <div class="text-3xl font-bold gradient-text mb-2">1M+</div>
+          <div class="text-gray-400 font-medium">Daily Readers</div>
+        </div>
+      </div>
+    </div> -->
   </header>
 
   <!-- Trending Blogs -->
   <% if (trendingBlogs && trendingBlogs.length > 0) { %>
-    <section class="container mx-auto px-6 py-16">
-      <h2 class="text-4xl font-bold text-center mb-12 text-white" data-aos="fade-up">🔥 Trending Blogs</h2>
+    <section class="container mx-auto px-6 py-20 relative">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+          <span class="gradient-text">🔥 Trending</span> Blogs
+        </h2>
+        <p class="text-xl text-gray-400">Discover the most popular stories right now</p>
+      </div>
+      
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <% trendingBlogs.forEach(blog => { %>
-          <div data-aos="fade-up" class="bg-gray-800/70 border border-gray-700 backdrop-blur-md rounded-xl shadow-xl overflow-hidden hover:scale-105 hover:shadow-pink-500/40 transition">
+        <% trendingBlogs.forEach((blog, index) => { %>
+          <div data-aos="fade-up" data-aos-delay="<%= index * 100 %>" class="group glass rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20">
             <% if (blog.thumbnail) { %>
-              <img src="/images/uploads/<%= blog.thumbnail %>" class="w-full h-40 object-cover">
+              <div class="relative h-48 overflow-hidden">
+                <img src="/images/uploads/<%= blog.thumbnail %>" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <% if (blog.category) { %>
+                  <div class="absolute bottom-4 left-4">
+                    <a class="glass px-3 py-1 rounded-full text-xs font-medium text-white hover:bg-white/30 transition-colors" href="/blogs/category/<%= blog.category %>">#<%= blog.category %></a>
+                  </div>
+                <% } %>
+              </div>
             <% } %>
-            <div class="p-5">
-              <h3 class="text-xl font-bold mb-2 text-white">
-                <a href="/blogs/<%= blog._id %>" class="hover:text-pink-400 transition"><%= blog.title %></a>
+            
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-white group-hover:text-purple-400 transition-colors duration-300">
+                <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
               </h3>
-              <p class="text-sm text-gray-400 mb-2">By <%= blog.user.name %> | <%= blog.createdAt.toDateString() %></p>
-              <p class="text-gray-300 mb-3">❤️ <%= blog.likes.length %> | 💬 <%= blog.comments.length %></p>
-              <% if (blog.category) { %>
-                <a class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs shadow" href="/blogs/category/<%= blog.category %>">#<%= blog.category %></a>
-              <% } %>
+              
+              <div class="flex items-center mb-3 text-sm">
+                <a class="text-blue-400 hover:text-blue-300 transition-colors" href="/user/<%= blog.user._id %>">@<%= blog.user.name %></a>
+                <span class="mx-2 text-gray-500">•</span>
+                <span class="text-gray-400"><%= blog.createdAt.toDateString() %></span>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 text-sm text-gray-400">
+                  <span class="flex items-center">❤️ <%= blog.likes.length %></span>
+                  <span class="flex items-center">💬 <%= blog.comments.length %></span>
+                </div>
+                <a href="/blogs/<%= blog._id %>" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">Read More →</a>
+              </div>
             </div>
           </div>
         <% }) %>
@@ -65,28 +127,51 @@
   <% } %>
 
   <!-- Latest Blogs -->
-  <section class="container mx-auto px-6 py-16">
-    <h2 class="text-4xl font-bold text-center mb-12 text-white" data-aos="fade-up">📚 Latest Blogs</h2>
+  <section class="container mx-auto px-6 py-20 relative">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        <span class="gradient-text">📚 Latest</span> Blogs
+      </h2>
+      <p class="text-xl text-gray-400">Fresh stories from our community</p>
+    </div>
+    
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       <% if (posts && posts.length > 0) { %>
-        <% posts.reverse().forEach(post => { %>
-          <div data-aos="zoom-in" class="bg-gray-900/80 border border-gray-800 backdrop-blur-md rounded-xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-blue-500/40 transition">
-            <img src="/images/uploads/<%= post.thumbnail || 'default.webp' %>" class="w-full h-40 object-cover">
-            <div class="p-5 flex flex-col">
-              <h3 class="text-lg font-semibold mb-2 text-white"><%= post.title %></h3>
+        <% posts.reverse().forEach((post, index) => { %>
+          <div data-aos="zoom-in" data-aos-delay="<%= index * 100 %>" class="group glass rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20">
+            <div class="relative h-48 overflow-hidden">
+              <img src="/images/uploads/<%= post.thumbnail || 'default.webp' %>" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               <% if (post.category) { %>
-                <a href="/blogs/category/<%= post.category %>" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs shadow w-1/5">#<%= post.category %></a>
+                <div class="absolute top-4 left-4">
+                  <a href="/blogs/category/<%= post.category %>" class="glass px-3 py-1 rounded-full text-xs font-medium text-white hover:bg-white/30 transition-colors">#<%= post.category %></a>
+                </div>
               <% } %>
-              <p class="text-gray-400 flex-grow"><%= post.content.substring(0, 100) %>...</p>
-              <a href="/blogs/<%= post._id %>" class="text-blue-400 hover:underline w-1/4">Read More.</a>
             </div>
-            <div class="px-5 py-3 bg-gray-800 text-sm text-gray-400 border-t border-gray-700">
-              By <a href="/user/<%= post.user._id %>" class="text-blue-400 hover:underline"><%= post.user.name %></a> | <%= post.createdAt.toDateString() %>
+            
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors duration-300"><%= post.title %></h3>
+              <p class="text-gray-400 mb-4 line-clamp-3"><%= post.content.substring(0, 120) %>...</p>
+              <a href="/blogs/<%= post._id %>" class="inline-block text-blue-400 hover:text-blue-300 font-medium transition-colors">Read More →</a>
+            </div>
+            
+            <div class="px-6 py-4 glass border-t border-white/10">
+              <div class="flex items-center justify-between text-sm text-gray-400">
+                <a href="/user/<%= post.user._id %>" class="text-blue-400 hover:text-blue-300 transition-colors">@<%= post.user.name %></a>
+                <span><%= post.createdAt.toDateString() %></span>
+              </div>
             </div>
           </div>
         <% }) %>
       <% } else { %>
-        <p class="text-center text-gray-400">No blogs yet. Be the first to <a href="/blogs/create" class="text-blue-400 underline">create one</a>!</p>
+        <div class="col-span-full text-center py-20">
+          <div class="glass rounded-3xl p-12 max-w-md mx-auto">
+            <div class="text-6xl mb-4">✍️</div>
+            <h3 class="text-2xl font-bold mb-4 text-white">No blogs yet!</h3>
+            <p class="text-gray-400 mb-6">Be the first to share your story with the world.</p>
+            <a href="/blogs/create" class="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:scale-105 transform transition-all duration-300">Create First Blog</a>
+          </div>
+        </div>
       <% } %>
     </div>
   </section>
@@ -95,6 +180,13 @@
 
   <!-- AOS Script -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init({ duration: 1000, once: true, easing: "ease-in-out" });</script>
+  <script>
+    AOS.init({ 
+      duration: 1000, 
+      once: true, 
+      easing: "ease-out-cubic",
+      offset: 50
+    });
+  </script>
 </body>
 </html>

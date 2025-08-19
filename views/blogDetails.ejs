@@ -1,117 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title><%= post.title %> - MyBlog</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title><%= post.title %> | MyBlog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      background-color: #1a202c;
+      background-image: radial-gradient(at 0% 0%, hsla(218, 59%, 51%, 0.15) 0, transparent 50%),
+                        radial-gradient(at 100% 100%, hsla(218, 59%, 51%, 0.15) 0, transparent 50%);
+    }
+  </style>
 </head>
-<body data-post-id="<%= post._id %>">
+
+<body class="text-gray-100 mt-5" data-post-id="<%= post._id %>" data-user-id="<%= post.user._id %>">
+
   <%- include("partials/navbar") %>
 
-  <div class="container mt-5">
-
-    <!-- Blog Title & Thumbnail -->
-    <h1 class="mb-3"><%= post.title %></h1>
-    <% if (post.thumbnail) { %>
-      <img src="/images/uploads/<%= post.thumbnail %>" class="img-fluid rounded mb-3" style="max-height:300px; object-fit:cover;">
-    <% } %>
-
-    <!-- Author & Date -->
-   <p> <a class="text-muted" href="/user/<%= post.user._id %>">By <%= post.user.name %></a> | <%= post.createdAt.toDateString() %></p>
-
-    <!-- Content -->
-    <p class="lead"><%= post.content %></p>
-
-    <!-- Tags -->
-    <% if (post.tags && post.tags.length > 0) { %>
-      <p><strong>Tags:</strong>
-        <% post.tags.forEach(tag => { %>
-          <span class="badge bg-secondary"><%= tag %></span>
-        <% }) %>
+  <section class="container mx-auto px-6 py-20 z-10 relative">
+    <div data-aos="fade-down" class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-4xl font-extrabold mb-4 gradient-text leading-tight"><%= post.title %></h1>
+      <p class="text-gray-400 text-s mb-4">
+        By @<a href="/user/<%= post.user._id %>" class="text-blue-400 text- hover:underline"><%= post.user.name %></a> |
+        <%= post.createdAt.toDateString() %>
       </p>
-    <% } %>
-    <!-- Category -->
-    <% if (post.category) { %>
-  <p>
-    <strong>Category:</strong>
-    <a href="/blogs/category/<%= post.category %>" class="text-decoration-none"><%= post.category %></a>
-  </p>
-<% } %>
 
+      <% if (post.thumbnail) { %>
+        <img src="/images/uploads/<%= post.thumbnail %>" alt="<%= post.title %>" class="w-full h-96 object-cover rounded-2xl shadow-lg mt-6" data-aos="zoom-in" data-aos-delay="200">
+      <% } %>
+    </div>
+  </section>
 
-    <!-- Back & Like Buttons -->
-    <div class="mt-4 d-flex gap-2">
-      <a href="/blogs" class="btn btn-secondary">⬅ Back</a>
-      <% if (user) { %>
-        <button id="likeBtn" class="btn btn-outline-danger">
-          ❤️ Like (<span id="likeCount"><%= post.likes.length %></span>)
+  <section class="container mx-auto  px-6 max-w-4xl z-10 relative">
+    <h2 class="text-3xl md:text-2xl font-bold mb-6 gradient-text" data-aos="fade-right">📖 Content</h2>
+    <article class="prose prose-invert text-x lg:prose-lg max-w-none glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="400">
+      <%= post.content %>
+    </article>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-12" data-aos="fade-up">
+      <button id="likeBtn"
+        class="w-full sm:w-auto px-5 py-4 rounded-xl font-bold transition-all duration-300
+        <%= user && post.likes.includes(user._id) 
+          ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white hover:scale-105 hover:shadow-lg' 
+          : 'glass text-white hover:bg-white/20 hover:scale-105' %>">
+        ❤️ <%= user && post.likes.includes(user._id) ? 'Unlike' : 'Like' %> 
+        (<span id="likeCount"><%= post.likes.length %></span>)
+      </button>
+
+      <% if (user && user._id.toString() !== post.user._id.toString()) { %>
+        <button id="followBtn"
+          class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold transition-all duration-300
+          <%= user.following.includes(post.user._id) 
+            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:scale-105 hover:shadow-lg' 
+            : 'glass text-white hover:bg-white/20 hover:scale-105' %>">
+          <%= user.following.includes(post.user._id) ? 'Unfollow' : 'Follow' %>
         </button>
-      <% } else { %>
-        <a href="/login" class="btn btn-outline-danger">❤️ Like (<%= post.likes.length %>)</a>
       <% } %>
     </div>
+  </section>
 
-    <!-- Comments Section -->
-    <div class="mt-5">
-      <h4 class="mb-3">💬 Comments (<span id="commentCount"><%= post.comments.length %></span>)</h4>
+  <section class="container mx-auto px-6 max-w-4xl py-12 relative z-10">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text" data-aos="fade-right">💬 Comments (<span id="commentCount"><%= post.comments.length %></span>)</h2>
 
-      <!-- Comment Form -->
-      <% if (user) { %>
-        <form id="commentForm" class="mb-4">
-          <div class="input-group">
-            <input type="text" id="commentInput" name="text" class="form-control" placeholder="Write a comment..." required>
-            <button class="btn btn-primary">Post</button>
-          </div>
-        </form>
-      <% } else { %>
-        <p><a href="/login">Login</a> to comment.</p>
-      <% } %>
+    <% if (user) { %>
+      <form id="commentForm" class="flex items-center space-x-2 mb-6" data-aos="fade-up">
+        <input type="text" id="commentInput" placeholder="Write a comment..."
+          class="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400">
+        <button type="submit"
+          class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg shadow-lg text-white font-semibold hover:scale-105 transform transition-all duration-300">
+          Post
+        </button>
+      </form>
+    <% } else { %>
+      <p class="text-gray-400 mb-6 glass p-6 rounded-2xl">Please <a href="/login" class="text-blue-400 hover:underline">login</a> to comment.</p>
+    <% } %>
 
-      <!-- Comments List -->
-      <ul class="list-group" id="commentList">
-        <% if (post.comments && post.comments.length > 0) { %>
-          <% post.comments.forEach(comment => { %>
-            <li class="list-group-item" id="comment-<%= comment._id %>">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <strong>
-                    <% if (comment.user.profilepic) { %>
-                      <img src="/images/uploads/<%= comment.user.profilepic %>" 
-                           class="rounded-circle me-2" style="width:30px;height:30px;object-fit:cover;">
-                    <% } %>
-                    <%= comment.user.name %>
-                  </strong>
-                  : <span class="comment-text"><%= comment.text %></span>
-                  <br>
-                  <small class="text-muted"><%= comment.createdAt.toDateString() %></small>
-                </div>
-
-                <% if (user && comment.user._id.toString() === user.id) { %>
-                  <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="toggleEditForm('<%= comment._id %>')">Edit</button>
-                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteComment('<%= comment._id %>')">Delete</button>
-                  </div>
+    <ul id="commentList" class="space-y-6">
+      <% post.comments.forEach(comment => { %>
+        <li id="comment-<%= comment._id %>" class="glass p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex justify-between items-start">
+            <div>
+              <strong class="flex items-center space-x-2">
+                <% if (comment.user.profilepic) { %>
+                  <img src="/images/uploads/<%= comment.user.profilepic %>" class="w-8 h-8 rounded-full object-cover border border-purple-400">
                 <% } %>
+                <span class="text-blue-400 hover:underline font-semibold"><%= comment.user.name %></span>
+              </strong>
+              <p class="comment-text text-gray-300 mt-2"><%= comment.text %></p>
+              <small class="text-gray-500 text-xs"><%= comment.createdAt.toDateString() %></small>
+            </div>
+            <% if (user && user._id.toString() === comment.user._id.toString()) { %>
+              <div class="flex space-x-2">
+                <button type="button" class="edit-comment-btn px-3 py-1 text-sm bg-white/10 hover:bg-white/20 rounded-lg text-gray-300 transition-colors">Edit</button>
+                <button type="button" class="delete-comment-btn px-3 py-1 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors">Delete</button>
               </div>
+            <% } %>
+          </div>
 
-              <!-- Edit Form -->
-              <form id="edit-form-<%= comment._id %>" class="mt-2 d-none">
-                <div class="input-group">
-                  <input type="text" name="text" value="<%= comment.text %>" class="form-control" required>
-                  <button class="btn btn-success btn-sm">Save</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onclick="toggleEditForm('<%= comment._id %>')">Cancel</button>
-                </div>
-              </form>
-            </li>
-          <% }) %>
-        <% } else { %>
-          <p class="text-muted">No comments yet. Be the first!</p>
-        <% } %>
-      </ul>
-    </div>
-  </div>
+          <form class="edit-form mt-4 hidden space-x-2">
+            <input type="text" name="text" value="<%= comment.text %>" class="flex-1 px-3 py-2 rounded-lg bg-gray-700 text-white border border-gray-600" required>
+            <button class="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm">Save</button>
+            <button type="button" class="cancel-edit-btn px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg text-sm">Cancel</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </section>
 
-  <!-- JS -->
+  <%- include("partials/footer") %>
+
   <script src="/js/blog.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 800, once: true });</script>
 </body>
 </html>
-<%- include("partials/footer") %>

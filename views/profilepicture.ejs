@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Profile Picture</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Upload Profile Picture | MyBlog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1a202c;
+      background-image: radial-gradient(at 0% 0%, hsla(218, 59%, 51%, 0.15) 0, transparent 50%),
+                        radial-gradient(at 100% 100%, hsla(218, 59%, 51%, 0.15) 0, transparent 50%);
+    }
+  </style>
 </head>
-<body class="bg-zinc-900 text-white flex items-center justify-center min-h-screen">
 
-  <div class="bg-zinc-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
-    <h1 class="text-2xl font-semibold mb-6 text-center">🖼️ Upload Profile Picture</h1>
+<body class="text-gray-100">
+  <%- include("partials/navbar") %>
 
-    <form action="/user/upload" method="post" enctype="multipart/form-data" class="space-y-4">
-      
-      <!-- File Input -->
-      <div>
-        <label class="block mb-2 text-sm font-medium">Choose an Image</label>
-        <input type="file" name="image" accept="image/*"
-               class="block w-full text-sm text-gray-300 border border-zinc-600 rounded-lg cursor-pointer bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2">
-      </div>
+  <div class="container mx-auto px-4 py-12 flex justify-center items-center">
+    <div class="bg-gray-800 rounded-3xl shadow-2xl p-8 lg:p-12 w-full max-w-lg" data-aos="fade-up">
+      <h1 class="text-3xl md:text-3xl font-extrabold text-center mb-6 text-blue-400">🖼️ Upload Profile Picture</h1>
+      <form action="/user/upload" method="post" enctype="multipart/form-data" class="space-y-6">
+        <div>
+          <label for="image" class="block text-x font-medium text-gray-300 mb-1">Choose an Image</label>
+          <label class="w-full text-white cursor-pointer bg-gray-700 border border-gray-600 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 hover:bg-gray-600 transition-colors duration-200">
+            <span class=" px-4 py-5">Choose a file...</span>
+            <input type="file" id="image" name="image" accept="image/*" class="sr-only">
+          </label>
+        </div>
+        
+        <button type="submit"
+          class="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition-colors">
+          Upload
+        </button>
 
-      <!-- Submit Button -->
-      <button type="submit" 
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-200">
-        Upload
-      </button>
-
-      <!-- Cancel -->
-      <a href="/user/profile" 
-         class="block text-center text-sm text-gray-400 hover:text-gray-200 transition">
-         Go back to Home
-       
-      </a>
-    </form>
+        <a href="/user/profile"
+          class="block text-center mt-4 text-gray-400 hover:text-blue-400 font-semibold hover:underline transition-colors">
+          Go back to Profile
+        </a>
+      </form>
+    </div>
   </div>
+  
+  <%- include("partials/footer") %>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
 </body>
 </html>
