@@ -11,11 +11,28 @@ const { isOwner } = require("../middlewares/auth");
 // Blog Listing
 router.get("/", async (req, res) => {
   try {
-    let posts = await postModel.find().populate("user").sort({ createdAt: -1 });
-    res.render("blogs", { posts, error: null, success: null });
+    // Fetch all posts with user and comments populated
+    let posts = await postModel
+      .find()
+      .populate("user", "name profilepic")
+      .populate("comments") 
+      .lean(); // use .lean() for faster queries
+
+    // Calculate trending score: more likes + more comments = higher rank
+    posts.forEach(post => {
+      post.trendingScore = (post.likes ? post.likes.length : 0) + (post.comments ? post.comments.length : 0);
+    });
+
+    // Sort descending by trendingScore
+    posts.sort((a, b) => b.trendingScore - a.trendingScore);
+
+    // Take top 5 trending blogs
+    const trendingBlogs = posts.slice(0, 5);
+
+    res.render("blogs", { posts, trendingBlogs, user: req.user || null,error: null, success: null });
   } catch (err) {
-    console.error("❌ Blog List Error:", err);
-    res.render("blogs", { posts: [], error: "Failed to load blogs", success: null });
+    console.error("❌ Homepage Error:", err);
+    res.render("blogs", { posts: [], trendingBlogs: [], user: req.user || null ,error: null, success: null });
   }
 });
 
@@ -188,4 +205,36 @@ router.post("/like/:id", authenticate, async (req, res) => {
     res.status(500).json({ success: false, message: "Error liking post" });
   }
 });
+
+//profile page view
+router.get("/profile/:userid", async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.params.userid })
+    if (!user) return res.status(404).send("User not found");
+
+    await user.populate({
+      path: "posts",
+      populate: { path: "user", select: "name profilepic" },
+      options: { sort: { createdAt: -1 } }
+    });
+
+    // Calculate analytics
+    const totalBlogs = user.posts.length;
+    const totalLikes = user.posts.reduce((sum, post) => sum + (post.likes ? post.likes.length : 0), 0);
+    let mostPopularBlog = null;
+    if (user.posts.length > 0) {
+      mostPopularBlog = user.posts.reduce((max, post) =>
+        (post.likes && post.likes.length > (max.likes ? max.likes.length : 0)) ? post : max
+      , user.posts[0]);
+    }
+
+    res.render("publicProfile", { user, totalBlogs, totalLikes, mostPopularBlog });
+  } catch (err) {
+    console.error("❌ Public Profile Error:", err);
+    res.redirect("/blogs");
+  }
+});
+
+
+
 module.exports = router;

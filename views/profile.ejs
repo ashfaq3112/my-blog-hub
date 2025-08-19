@@ -21,10 +21,12 @@
       <p class="text-muted">@<%= user.username %></p>
       <p>Email: <%= user.email %></p>
       <p>Age: <%= user.age %></p>
-
-      <form action="/user/profilepicture" method="GET">
-        <button class="btn btn-outline-primary mt-2">Change Profile Picture</button>
-      </form>
+      <p>Bio: <%= user.bio || "This user has no bio yet." %></p>
+      <p>Role: <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %></p>
+      <div class="d-flex justify-content-center">
+        <a href="/user/edit" class="btn btn-primary me-2">Edit Profile</a>
+        <a href="/user/profilepicture" class="btn btn-outline-primary">Change Profile Picture</a>
+      </div>
     </div>
 
     <!-- User Blogs Section -->

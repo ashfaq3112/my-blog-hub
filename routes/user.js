@@ -6,6 +6,7 @@ const { authenticate } = require("../middlewares/auth");
 const upload = require("../config/multer");
 const userModel = require("../models/user");
 
+// router.use(express.urlencoded({ extended: true }));
 // Profile Page
 router.get("/profile", authenticate, async (req, res) => {
   try {
@@ -42,5 +43,46 @@ router.post("/upload", authenticate, upload.single("image"), async (req, res) =>
     res.render("profilepicture", { error: "Failed to upload profile picture", success: null });
   }
 });
+
+// Update Profile Page
+router.get("/edit", authenticate, (req, res) => {
+  let user = req.user;
+  if (!user) return res.redirect("/login");
+  res.render("editprofile", { user, error: null, success: null });
+});
+
+// Update Profile
+router.post("/editprofile", authenticate, upload.single("profilepic"), async (req, res) => {
+  try {
+    const { name, username, email, bio } = req.body;
+
+    if (!name || !username || !email) {
+      return res.render("editprofile", { user: req.user, error: "Name, username, and email are required", success: null });
+    }
+
+    // Find the current user
+    const user = await userModel.findById(req.user.id);
+    if (!user) return res.redirect("/login");
+
+    // Update fields
+    user.name = name;
+    user.username = username;
+    user.email = email;
+    user.bio = bio || "";
+
+    // Update profile picture if uploaded
+    if (req.file) {
+      user.profilepic = req.file.filename;
+    }
+
+    await user.save();
+
+    res.render("editprofile", { user, error: null, success: "✅ Profile updated successfully" });
+  } catch (err) {
+    console.error("❌ Edit Profile Error:", err);
+    res.render("editprofile", { user: req.user, error: "Failed to update profile", success: null });
+  }
+});
+
 
 module.exports = router;

@@ -36,11 +36,11 @@ app.use("/comments", require("./routes/comments"));
 // Homepage Route
 app.get("/", async (req, res) => {
   try {
-    const posts = await postModel
+   let posts = await postModel
       .find()
-      .populate("user")
-      .sort({ createdAt: -1 })
-      .limit(5);
+      .populate("user", "name profilepic")
+      .populate("comments") 
+      .lean();
 
     let user = null;
     if (req.cookies.token) {
@@ -51,13 +51,53 @@ app.get("/", async (req, res) => {
         user = null; // token invalid or expired
       }
     }
+    
+    // Calculate trending score: more likes + more comments = higher rank
+    posts.forEach(post => {
+      post.trendingScore = (post.likes ? post.likes.length : 0) + (post.comments ? post.comments.length : 0);
+    });
 
-    res.render("index", { posts, user });
+    // Sort descending by trendingScore
+    posts.sort((a, b) => b.trendingScore - a.trendingScore);
+
+    // Take top 5 trending blogs
+    const trendingBlogs = posts.slice(0, 5);
+
+    res.render("index", { posts, user,trendingBlogs, error: null, success: null });
   } catch (err) {
     console.error("❌ Homepage Error:", err.message);
     res.render("index", { posts: [], user: null });
   }
 });
+
+// app.get("/", async (req, res) => {
+//   try {
+//     // Fetch all posts with user and comments populated
+//     let posts = await postModel
+//       .find()
+//       .populate("user", "name profilepic")
+//       .populate("comments") 
+//       .lean(); // use .lean() for faster queries
+
+//     // Calculate trending score: more likes + more comments = higher rank
+//     posts.forEach(post => {
+//       post.trendingScore = (post.likes ? post.likes.length : 0) + (post.comments ? post.comments.length : 0);
+//     });
+
+//     // Sort descending by trendingScore
+//     posts.sort((a, b) => b.trendingScore - a.trendingScore);
+
+//     // Take top 5 trending blogs
+//     const trendingBlogs = posts.slice(0, 5);
+
+//     res.render("blogs", { posts, trendingBlogs, user: req.user || null,error: null, success: null });
+//   } catch (err) {
+//     console.error("❌ Homepage Error:", err);
+//     res.render("blogs", { posts: [], trendingBlogs: [], user: req.user || null ,error: null, success: null });
+//   }
+// });
+
+
 
 // 404 Handler
 app.use((req, res) => {

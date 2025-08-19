@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     age: { type: Number },
+    role:{type:String, default:"user", enum:["user","admin"]},
+    bio: { type: String, default: "This user has no bio yet." },
     profilepic: { type: String, default: "default.webp" },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
   },
@@ -14,4 +16,4 @@ const userSchema = new mongoose.Schema(
 );
 
 // ✅ Fix OverwriteModelError
-module.exports = mongoose.models.User || mongoose.model("user", userSchema);
+module.exports = mongoose.models.user || mongoose.model("user", userSchema);

@@ -42,3 +42,39 @@ body {
    */
    margin-left: 550px;
 }
+
+    .search-bar {
+      max-width: 600px;
+      margin: 30px auto 20px auto;
+    }
+
+    .trending-title {
+      margin-top: 40px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .trending-card img {
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-footer a {
+      text-decoration: none;
+    }
+
+    .category-badge {
+      display: inline-block;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding: 2px 8px;
+      background-color: #6c757d;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
