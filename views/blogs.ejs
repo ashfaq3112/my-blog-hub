@@ -19,37 +19,7 @@
     </div>
   </form>
 
-  <!-- Trending Blogs -->
-  <% if (trendingBlogs && trendingBlogs.length > 0) { %>
-    <h3 class="trending-title">🔥 Trending Blogs</h3>
-    <div class="container mb-5">
-      <div class="row">
-        <% trendingBlogs.forEach(blog => { %>
-          <div class="col-md-4 mb-4">
-            <div class="card shadow-sm trending-card h-100">
-              <% if (blog.thumbnail) { %>
-                <img src="/images/uploads/<%= blog.thumbnail %>" class="card-img-top">
-              <% } %>
-              <div class="card-body">
-                <h5 class="card-title"><a href="/blogs/<%= blog._id %>" class="text-decoration-none"><%= blog.title %></a></h5>
-                <p class="card-text text-muted">
-                  By <%= blog.user.name %> | <%= new Date(blog.createdAt).toDateString() %>
-                </p>
-                <p class="card-text">
-                  ❤️ <%= blog.likes.length %> | 💬 <%= blog.comments.length %>
-                </p>
-                <div>
-                  <% if(blog.category){ %>
-                    <span class="category-badge"><%= blog.category %></span>
-                  <% } %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% }) %>
-      </div>
-    </div>
-  <% } %>
+ 
 
   <!-- All Blogs Section -->
   <div class="container my-5">
@@ -71,7 +41,7 @@
                 <a href="/blogs/<%= post._id %>" class="btn btn-outline-primary mt-auto">Read More</a>
               </div>
               <div class="card-footer small text-muted">
-                By <a href="/blogs/profile/<%= post.user.id %>"><%= post.user.name %></a> | <%= post.createdAt.toDateString() %>
+                By <a href="/user/<%= post.user._id %>"><%= post.user.name %></a> | <%= post.createdAt.toDateString() %>
               </div>
             </div>
           </div>

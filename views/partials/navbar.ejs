@@ -1,20 +1,46 @@
+<nav class="bg-zinc-900 shadow sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="text-2xl font-bold text-blue-600">MyBlog</a>
 
+    <!-- Menu (Desktop) -->
+    <div class="hidden md:flex space-x-6">
+      <a href="/" class="text-white hover:text-blue-600 transition">Home</a>
+      <a href="/blogs" class="text-white hover:text-blue-600 transition">Blogs</a>
+      <% if (user) { %>
+        <a href="/blogs/create" class="text-white hover:text-blue-600 transition">Create</a>
+        <a href="/user/profile" class="text-white hover:text-blue-600 transition">Profile</a>
+        <a href="/logout" class="text-red-600 hover:text-red-800 transition">Logout</a>
+      <% } else { %>
+        <a href="/login" class="text -white hover:text-blue-600 transition">Login</a>
+        <a href="/register" class="text-white hover:text-blue-600 transition">Register</a>
+      <% } %>
+    </div>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="/">📝 MyBlog</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none text-2xl">
+      ☰
     </button>
+  </div>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blogs">Blogs</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blogs/create">Create Blog</a></li>
-        <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>
-        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-      </ul>
+  <!-- Mobile Dropdown -->
+  <div
+    id="mobileMenu"
+    class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-gray-50 border-t md:hidden"
+  >
+    <div class="px-4 py-3 space-y-2">
+      <a href="/" class="block text-gray-700 hover:text-blue-600 transition">Home</a>
+      <a href="/blogs" class="block text-gray-700 hover:text-blue-600 transition">Blogs</a>
+      <% if (user) { %>
+        <a href="/blogs/create" class="block text-gray-700 hover:text-blue-600 transition">Create</a>
+        <a href="/user/profile" class="block text-gray-700 hover:text-blue-600 transition">Profile</a>
+        <a href="/logout" class="block text-red-600 hover:text-red-800 transition">Logout</a>
+      <% } else { %>
+        <a href="/login" class="block text-gray-700 hover:text-blue-600 transition">Login</a>
+        <a href="/register" class="block text-gray-700 hover:text-blue-600 transition">Register</a>
+      <% } %>
     </div>
   </div>
 </nav>
+
+<script src="/js/navbar.js"></script>

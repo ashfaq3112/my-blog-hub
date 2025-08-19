@@ -36,4 +36,12 @@ function isOwner(model) {
   };
 }
 
-module.exports = { authenticate, isOwner };
+// middleware/auth.js
+function setUser(req, res, next) {
+  res.locals.user = req.user || null; // if logged in, pass user, else null
+  next();
+}
+
+// Export the middlewares
+
+module.exports = { authenticate, isOwner,setUser };

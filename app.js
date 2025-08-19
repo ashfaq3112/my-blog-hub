@@ -3,8 +3,10 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const { authenticate, isOwner, setUser } = require("./middlewares/auth");
 
 const app = express();
+app.use(setUser);
 
 // Models
 const postModel = require("./models/post");

@@ -144,3 +144,27 @@ if (likeBtn) {
   });
 }
 
+// follow/unfollow functionality
+const followBtn = document.getElementById("followBtn"); 
+if(followBtn) {
+  followBtn.addEventListener("click", async () => {
+    const userId = document.body.getAttribute("data-user-id");
+
+    try {
+      const res = await fetch(`/user/follow/${userId}`, {
+        method: "POST",
+        headers: { "Accept": "application/json" }
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        // Update the button text and style
+        followBtn.textContent = data.following ? "Unfollow" : "Follow";
+        followBtn.classList.toggle("btn-primary");
+        followBtn.classList.toggle("btn-outline-primary");
+      }
+    } catch (err) {
+      console.error("❌ Follow/Unfollow failed:", err);
+    }
+  });
+}

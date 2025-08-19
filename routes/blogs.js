@@ -207,9 +207,9 @@ router.post("/like/:id", authenticate, async (req, res) => {
 });
 
 //profile page view
-router.get("/profile/:userid", async (req, res) => {
+router.get("/p/:email", async (req, res) => {
   try {
-    const user = await userModel.findOne({ _id: req.params.userid })
+    const user = await userModel.findOne({ email: req.params.email })
     if (!user) return res.status(404).send("User not found");
 
     await user.populate({

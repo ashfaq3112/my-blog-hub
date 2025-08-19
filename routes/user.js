@@ -10,9 +10,26 @@ const userModel = require("../models/user");
 // Profile Page
 router.get("/profile", authenticate, async (req, res) => {
   try {
-    let user = await userModel.findOne({ email: req.user.email }).populate("posts");
+    const user = await userModel.findOne({ _id: req.user.id });
     if (!user) return res.redirect("/login");
-    res.render("profile", { user, error: null, success: null });
+   
+
+    await user.populate({
+      path: "posts",
+      populate: { path: "user", select: "name profilepic" },
+      options: { sort: { createdAt: -1 } }
+    });
+    // Calculate analytics
+    const totalBlogs = user.posts.length;
+    const totalLikes = user.posts.reduce((sum, post) => sum + (post.likes ? post.likes.length : 0), 0);
+    let mostPopularBlog = null;
+    if (user.posts.length > 0) {
+      mostPopularBlog = user.posts.reduce((max, post) =>
+        (post.likes && post.likes.length > (max.likes ? max.likes.length : 0)) ? post : max
+      , user.posts[0]);
+    }
+
+    res.render("profile", { user,totalBlogs, totalLikes, mostPopularBlog , error: null, success: null });
   } catch (err) {
     console.error("❌ Profile Error:", err);
     res.render("profile", { user: null, error: "Failed to load profile", success: null });
@@ -83,6 +100,85 @@ router.post("/editprofile", authenticate, upload.single("profilepic"), async (re
     res.render("editprofile", { user: req.user, error: "Failed to update profile", success: null });
   }
 });
+
+//profile page view
+router.get("/:id", authenticate, async (req, res) => {
+  try {
+    const profileUser = await userModel.findById(req.params.id)
+      .populate({
+        path: "posts",
+        populate: { path: "likes" } // for likes count
+      })
+      .populate("followers", "name profilepic")
+      .populate("following", "name profilepic");
+
+    if (!profileUser) {
+      return res.status(404).send("User not found");
+    }
+
+    // Logged in user
+    const currentUser = await userModel.findById(req.user.id).populate("following");
+
+    // Stats
+    const totalBlogs = profileUser.posts.length;
+    const totalLikes = profileUser.posts.reduce((acc, post) => acc + post.likes.length, 0);
+    const mostPopularBlog = profileUser.posts.sort(
+      (a, b) => b.likes.length - a.likes.length
+    )[0];
+
+    res.render("publicProfile", {
+      profileUser,
+      currentUser,
+      totalBlogs,
+      totalLikes,
+      mostPopularBlog
+    });
+  } catch (err) {
+    console.error("❌ Error loading profile:", err);
+    res.status(500).send("Server Error");
+  }
+})
+//flow to follow a user
+// 📍 Follow / Unfollow
+router.post("/follow/:id", authenticate, async (req, res) => {
+  try {
+    const userToFollow = await userModel.findById(req.params.id);
+    const currentUser = await userModel.findById(req.user.id);
+
+    if (!userToFollow) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    let action;
+
+    if (currentUser.following.includes(userToFollow._id)) {
+      // ✅ Unfollow
+      currentUser.following.pull(userToFollow._id);
+      userToFollow.followers.pull(currentUser._id);
+      action = "unfollow";
+    } else {
+      // ✅ Follow
+      currentUser.following.push(userToFollow._id);
+      userToFollow.followers.push(currentUser._id);
+      action = "follow";
+    }
+
+    await currentUser.save();
+    await userToFollow.save();
+
+    return res.json({
+      success: true,
+      action,
+      followersCount: userToFollow.followers.length,
+      followingCount: currentUser.following.length,
+    });
+  } catch (err) {
+    console.error("Error in follow route:", err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
 
 
 module.exports = router;

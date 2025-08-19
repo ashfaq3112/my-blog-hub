@@ -16,7 +16,7 @@
     <% } %>
 
     <!-- Author & Date -->
-    <p class="text-muted">By <%= post.user.name %> | <%= post.createdAt.toDateString() %></p>
+   <p> <a class="text-muted" href="/user/<%= post.user._id %>">By <%= post.user.name %></a> | <%= post.createdAt.toDateString() %></p>
 
     <!-- Content -->
     <p class="lead"><%= post.content %></p>

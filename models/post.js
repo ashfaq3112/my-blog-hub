@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema({
   tags: [{ type: String }], // New field
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
+  author: { type: String, default: "Anonymous" }, // New field
 }, 
 
 { timestamps: true });

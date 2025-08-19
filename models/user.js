@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema(
     bio: { type: String, default: "This user has no bio yet." },
     profilepic: { type: String, default: "default.webp" },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   },
   { timestamps: true }
 );

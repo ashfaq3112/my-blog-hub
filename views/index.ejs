@@ -3,131 +3,98 @@
 
 <head>
   <title>MyBlog - Home</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/style.css" rel="stylesheet">
-  <style>
-    .category-badge {
-      display: inline-block;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      padding: 2px 8px;
-      background-color: #6c757d;
-      color: white;
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
-
-    .trending-title {
-      margin-top: 40px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .trending-card img {
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .card-body {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-footer a {
-      text-decoration: none;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-gradient-to-b from-gray-950 via-gray-900 to-black text-gray-200">
+
   <%- include("partials/navbar") %>
 
   <!-- Hero Section -->
-  <header class="bg-primary text-light text-center py-5">
-    <div class="container">
-      <h1 class="display-4 fw-bold">Welcome to MyBlog</h1>
-      <p class="lead">Share your thoughts, ideas, and stories with the world</p>
+  <header class="relative rounded-lg bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-28 text-center overflow-hidden">
+    <!-- Background Glow -->
+    <div class="absolute inset-0">
+      <div class="absolute -top-20 -left-20 w-96 h-96 bg-pink-500/30 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative container mx-auto px-6">
+      <h1 class="text-6xl md:text-7xl font-extrabold mb-6 tracking-tight" data-aos="fade-down">
+        Welcome to 
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-pink-400 to-red-400">MyBlog</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-300" data-aos="fade-up">
+        Share your <span class="text-yellow-300 font-semibold">thoughts</span>, explore <span class="text-pink-300 font-semibold">ideas</span>, and inspire the <span class="text-blue-300 font-semibold">world</span> 🌍
+      </p>
+
       <% if (!user) { %>
-        <a href="/register" class="btn btn-light btn-lg me-2">Get Started</a>
-        <a href="/login" class="btn btn-outline-light btn-lg">Login</a>
+        <a href="/register" class="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-lg hover:scale-105 transition inline-block" data-aos="zoom-in">Get Started</a>
+        <a href="/login" class="ml-3 px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-blue-700 transition inline-block" data-aos="zoom-in" data-aos-delay="200">Login</a>
       <% } else { %>
-        <a href="/blogs" class="btn btn-light btn-lg me-2">Explore Blogs</a>
-        <a href="/user/profile" class="btn btn-outline-light btn-lg">My Profile</a>
+        <a href="/blogs" class="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-lg hover:scale-105 transition inline-block" data-aos="zoom-in">Explore Blogs</a>
+        <a href="/user/profile" class="ml-3 px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-blue-700 transition inline-block" data-aos="zoom-in" data-aos-delay="200">My Profile</a>
       <% } %>
     </div>
   </header>
 
   <!-- Trending Blogs -->
   <% if (trendingBlogs && trendingBlogs.length > 0) { %>
-    <div class="container my-5">
-      <h3 class="trending-title">🔥 Trending Blogs</h3>
-      <div class="row">
+    <section class="container mx-auto px-6 py-16">
+      <h2 class="text-4xl font-bold text-center mb-12 text-white" data-aos="fade-up">🔥 Trending Blogs</h2>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <% trendingBlogs.forEach(blog => { %>
-          <div class="col-md-4 mb-4">
-            <div class="card shadow-sm trending-card h-100">
-              <% if (blog.thumbnail) { %>
-                <img src="/images/uploads/<%= blog.thumbnail %>" class="card-img-top">
+          <div data-aos="fade-up" class="bg-gray-800/70 border border-gray-700 backdrop-blur-md rounded-xl shadow-xl overflow-hidden hover:scale-105 hover:shadow-pink-500/40 transition">
+            <% if (blog.thumbnail) { %>
+              <img src="/images/uploads/<%= blog.thumbnail %>" class="w-full h-40 object-cover">
+            <% } %>
+            <div class="p-5">
+              <h3 class="text-xl font-bold mb-2 text-white">
+                <a href="/blogs/<%= blog._id %>" class="hover:text-pink-400 transition"><%= blog.title %></a>
+              </h3>
+              <p class="text-sm text-gray-400 mb-2">By <%= blog.user.name %> | <%= blog.createdAt.toDateString() %></p>
+              <p class="text-gray-300 mb-3">❤️ <%= blog.likes.length %> | 💬 <%= blog.comments.length %></p>
+              <% if (blog.category) { %>
+                <a class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs shadow" href="/blogs/category/<%= blog.category %>">#<%= blog.category %></a>
               <% } %>
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a href="/blogs/<%= blog._id %>" class="text-decoration-none"><%= blog.title %></a>
-                </h5>
-                <p class="card-text text-muted">
-                  By <%= blog.user.name %> | <%= new Date(blog.createdAt).toDateString() %>
-                </p>
-                <p class="card-text">
-                  ❤️ <%= blog.likes.length %> | 💬 <%= blog.comments.length %>
-                </p>
-                <% if (blog.category) { %>
-                  <span class="category-badge"><%= blog.category %></span>
-                <% } %>
-              </div>
-              <div class="card-footer small text-muted">
-                By <a href="/blogs/profile/<%= blog.user.id %>"><%= blog.user.name %></a> |
-                <%= blog.createdAt.toDateString() %>
-              </div>
             </div>
           </div>
         <% }) %>
       </div>
-    </div>
+    </section>
   <% } %>
 
   <!-- Latest Blogs -->
-  <main class="container my-5">
-    <h2 class="text-center mb-4">📚 Latest Blogs</h2>
-    <div class="row">
+  <section class="container mx-auto px-6 py-16">
+    <h2 class="text-4xl font-bold text-center mb-12 text-white" data-aos="fade-up">📚 Latest Blogs</h2>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       <% if (posts && posts.length > 0) { %>
-        <% posts.forEach(post => { %>
-          <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-              <img src="/images/uploads/<%= post.thumbnail || 'default.webp' %>" class="card-img-top"
-                style="height:180px; object-fit:cover;">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title"><%= post.title %></h5>
-                <% if (post.category) { %>
-                  <a href="/blogs/category/<%= post.category %>" class="category-badge"><%= post.category %></a>
-                <% } %>
-                <p class="card-text text-muted mt-2"><%= post.content.substring(0, 100) %>...</p>
-                <a href="/blogs/<%= post._id %>" class="btn btn-outline-primary mt-auto">Read More</a>
-              </div>
-              <div class="card-footer small text-muted">
-                By <a href="/blogs/profile/<%= post.user.id %>"><%= post.user.name %></a> |
-                <%= post.createdAt.toDateString() %>
-              </div>
+        <% posts.reverse().forEach(post => { %>
+          <div data-aos="zoom-in" class="bg-gray-900/80 border border-gray-800 backdrop-blur-md rounded-xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-blue-500/40 transition">
+            <img src="/images/uploads/<%= post.thumbnail || 'default.webp' %>" class="w-full h-40 object-cover">
+            <div class="p-5 flex flex-col">
+              <h3 class="text-lg font-semibold mb-2 text-white"><%= post.title %></h3>
+              <% if (post.category) { %>
+                <a href="/blogs/category/<%= post.category %>" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs shadow w-1/5">#<%= post.category %></a>
+              <% } %>
+              <p class="text-gray-400 flex-grow"><%= post.content.substring(0, 100) %>...</p>
+              <a href="/blogs/<%= post._id %>" class="text-blue-400 hover:underline w-1/4">Read More.</a>
+            </div>
+            <div class="px-5 py-3 bg-gray-800 text-sm text-gray-400 border-t border-gray-700">
+              By <a href="/user/<%= post.user._id %>" class="text-blue-400 hover:underline"><%= post.user.name %></a> | <%= post.createdAt.toDateString() %>
             </div>
           </div>
         <% }) %>
       <% } else { %>
-        <p class="text-center text-muted">No blogs yet. Be the first to <a href="/blogs/create">create one</a>!</p>
+        <p class="text-center text-gray-400">No blogs yet. Be the first to <a href="/blogs/create" class="text-blue-400 underline">create one</a>!</p>
       <% } %>
     </div>
-    <div class="text-center mt-4">
-      <a href="/blogs" class="btn btn-lg btn-secondary">View All Blogs</a>
-    </div>
-  </main>
+  </section>
 
   <%- include("partials/footer") %>
-</body>
 
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1000, once: true, easing: "ease-in-out" });</script>
+</body>
 </html>
