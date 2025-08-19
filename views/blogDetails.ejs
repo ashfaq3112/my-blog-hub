@@ -3,6 +3,7 @@
 
 <head>
   <title><%= post.title %> | MyBlog</title>
+  <meta name="description" content="<%= post.content.substring(0, 160) %>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
@@ -15,7 +16,7 @@
   </style>
 </head>
 
-<body class="text-gray-100 mt-5" data-post-id="<%= post._id %>" data-user-id="<%= post.user._id %>">
+<body class="bg-gradient-to-br from-gray-950 via-purple-950 to-gray-950 text-gray-200 overflow-x-hidden" data-post-id="<%= post._id %>" data-user-id="<%= post.user._id %>">
 
   <%- include("partials/navbar") %>
 
@@ -35,7 +36,7 @@
 
   <section class="container mx-auto  px-6 max-w-4xl z-10 relative">
     <h2 class="text-3xl md:text-2xl font-bold mb-6 gradient-text" data-aos="fade-right">📖 Content</h2>
-    <article class="prose prose-invert text-x lg:prose-lg max-w-none glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="400">
+    <article class="prose prose-invert text-xl lg:prose-lg max-w-none glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="400">
       <%= post.content %>
     </article>
 

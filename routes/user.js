@@ -62,8 +62,8 @@ router.post("/upload", authenticate, upload.single("image"), async (req, res) =>
 });
 
 // Update Profile Page
-router.get("/edit", authenticate, (req, res) => {
-  let user = req.user;
+router.get("/edit", authenticate, async(req, res) => {
+  let user = await userModel.findById(req.user.id);
   if (!user) return res.redirect("/login");
   res.render("editprofile", { user, error: null, success: null });
 });

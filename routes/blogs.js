@@ -9,7 +9,7 @@ const upload = require("../config/multer");
 const { isOwner } = require("../middlewares/auth");
 
 // Blog Listing
-router.get("/", async (req, res) => {
+router.get("/", authenticate,async (req, res) => {
   try {
     // Fetch all posts with user and comments populated
     let posts = await postModel
@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
 
 // Create Blog Form
 router.get("/create", authenticate, (req, res) => {
-  res.render("createBlog",{profileUser:req.user,error: null, success: null });
+  res.render("createBlog",{user:req.user,error: null, success: null });
 });
 
 // Create Blog

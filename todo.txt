@@ -3,3 +3,18 @@ login and resgister
 logout
 post creation
 post delete
+
+   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-10" data-aos="fade-up" data-aos-delay="600">
+        <a href="/blogs/category/tech" class="glass rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-3xl font-bold gradient-text mb-2">💻</div>
+          <div class="text-gray-400 font-medium">Tech</div>
+        </a>
+        <a href="/blogs/category/travel" class="glass rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-3xl font-bold gradient-text mb-2">✈️</div>
+          <div class="text-gray-400 font-medium">Travel</div>
+        </a>
+        <a href="/blogs/category/lifestyle" class="glass rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-3xl font-bold gradient-text mb-2">✨</div>
+          <div class="text-gray-400 font-medium">Lifestyle</div>
+        </a>
+      </div>
