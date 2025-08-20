@@ -1,4 +1,8 @@
 {
+  "name": "my-blog-hub",
+  "version": "1.0.0",
+  "description": "A modern blogging platform built with Node.js, Express, MongoDB, and EJS.",
+  "main": "app.js",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
@@ -22,7 +26,6 @@
     "watch:css": "npx tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch",
     "dev": "concurrently \"npm run watch:css\" \"nodemon app.js\"",
     "start": "node app.js",
-   "main": "app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

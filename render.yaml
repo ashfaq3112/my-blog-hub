@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: my-blog-hub
+    env: node
+    rootDir: .
+    buildCommand: "npm install && npm run build:css"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
