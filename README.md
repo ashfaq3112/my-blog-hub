@@ -1,4 +1,4 @@
-# 📖 My Blog Hub
+   # 📖 My Blog Hub
 
 A modern blogging platform built with **Node.js, Express, MongoDB, and EJS**.  
 It features user profiles, following system, blog creation, trending/latest sections, and clean UI with animations.  
@@ -61,13 +61,16 @@ http://localhost:3000
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](screenshots/home.png)
+![Home](./images/assets/Home.png)
 
 ### 👤 Profile Page
-![Profile](screenshots/profile.png)
+![Profile](./images/assets/Profile.png)
+
+### ✍️ Blog Listing page
+![BLogs](./images/assets/Blog.png)
 
 ### ✍️ Blog Post Page
-![Blog](screenshots/blog.png)
+![Blog](./images/assets/blog_details.png)
 
 
 ## 🤝 Contributing
