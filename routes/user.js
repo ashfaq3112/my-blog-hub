@@ -10,15 +10,24 @@ const userModel = require("../models/user");
 // Profile Page
 router.get("/profile", authenticate, async (req, res) => {
   try {
-    const user = await userModel.findOne({ _id: req.user.id });
+       const user = await userModel.findById(req.user.id)
+      .populate({
+        path: "posts",
+        populate: { path: "likes" } // for likes count
+      })
+      .populate("followers", "name profilepic")
+      .populate("following", "name profilepic");
+      console.log(user);
     if (!user) return res.redirect("/login");
    
 
-    await user.populate({
-      path: "posts",
-      populate: { path: "user", select: "name profilepic" },
-      options: { sort: { createdAt: -1 } }
-    });
+    // await user.populate({
+    //   path: "posts",
+    //   populate: { path: "user", select: "name profilepic" },
+    //   options: { sort: { createdAt: -1 } },
+    //   populate: { path: "followers", select: "name profilepic" },
+    //   populate: { path: "following", select: "name profilepic" }
+    // });
     // Calculate analytics
     const totalBlogs = user.posts.length;
     const totalLikes = user.posts.reduce((sum, post) => sum + (post.likes ? post.likes.length : 0), 0);
@@ -127,7 +136,7 @@ router.get("/:id", authenticate, async (req, res) => {
     )[0];
 
     res.render("publicProfile", {
-      profileUser,
+      user:profileUser,
       currentUser,
       totalBlogs,
       totalLikes,
