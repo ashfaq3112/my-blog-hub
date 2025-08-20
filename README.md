@@ -61,16 +61,16 @@ http://localhost:3000
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](./images/assets/Home.png)
+![Home](./public/images/assets/Home.png)
 
 ### 👤 Profile Page
-![Profile](./images/assets/Profile.png)
+![Profile](./public/images/assets/Profile.png)
 
 ### ✍️ Blog Listing page
-![BLogs](./images/assets/Blog.png)
+![BLogs](./public/images/assets/Blog.png)
 
 ### ✍️ Blog Post Page
-![Blog](./images/assets/blog_details.png)
+![Blog](./public/images/assets/blog_details.png)
 
 
 ## 🤝 Contributing
