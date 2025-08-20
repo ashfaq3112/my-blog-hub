@@ -67,7 +67,7 @@ http://localhost:3000
 ![Profile](./public/images/assets/Profile.png)
 
 ### ✍️ Blog Listing page
-![BLogs](./public/images/assets/Blog.png)
+![BLogs](./public/images/assets/Blogs.png)
 
 ### ✍️ Blog Post Page
 ![Blog](./public/images/assets/blog_details.png)
