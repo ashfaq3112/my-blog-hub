@@ -79,7 +79,7 @@ http://localhost:3000
 2. Create a new branch  
    ```bash
    git checkout -b feature/your-feature
-  '''3
+   ```
 3.Commit your changes
 ```
 git commit -m "Added new feature"
