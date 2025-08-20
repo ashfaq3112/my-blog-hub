@@ -72,33 +72,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-// app.get("/", async (req, res) => {
-//   try {
-//     // Fetch all posts with user and comments populated
-//     let posts = await postModel
-//       .find()
-//       .populate("user", "name profilepic")
-//       .populate("comments") 
-//       .lean(); // use .lean() for faster queries
-
-//     // Calculate trending score: more likes + more comments = higher rank
-//     posts.forEach(post => {
-//       post.trendingScore = (post.likes ? post.likes.length : 0) + (post.comments ? post.comments.length : 0);
-//     });
-
-//     // Sort descending by trendingScore
-//     posts.sort((a, b) => b.trendingScore - a.trendingScore);
-
-//     // Take top 5 trending blogs
-//     const trendingBlogs = posts.slice(0, 5);
-
-//     res.render("blogs", { posts, trendingBlogs, user: req.user || null,error: null, success: null });
-//   } catch (err) {
-//     console.error("❌ Homepage Error:", err);
-//     res.render("blogs", { posts: [], trendingBlogs: [], user: req.user || null ,error: null, success: null });
-//   }
-// });
-
 
 
 // 404 Handler
