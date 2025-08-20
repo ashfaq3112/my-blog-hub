@@ -1,4 +1,4 @@
-# 📖 My Blog Hub
+   # 📖 My Blog Hub
 
 A modern blogging platform built with **Node.js, Express, MongoDB, and EJS**.  
 It features user profiles, following system, blog creation, trending/latest sections, and clean UI with animations.  
@@ -61,13 +61,16 @@ http://localhost:3000
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](screenshots/home.png)
+![Home](./public/images/assets/Home.png)
 
 ### 👤 Profile Page
-![Profile](screenshots/profile.png)
+![Profile](./public/images/assets/Profile.png)
+
+### ✍️ Blog Listing page
+![BLogs](./public/images/assets/Blogs.png)
 
 ### ✍️ Blog Post Page
-![Blog](screenshots/blog.png)
+![Blog](./public/images/assets/blog_details.png)
 
 
 ## 🤝 Contributing
@@ -76,7 +79,7 @@ http://localhost:3000
 2. Create a new branch  
    ```bash
    git checkout -b feature/your-feature
-  '''3
+   ```
 3.Commit your changes
 ```
 git commit -m "Added new feature"
