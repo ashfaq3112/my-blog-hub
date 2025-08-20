@@ -17,7 +17,7 @@ router.get("/profile", authenticate, async (req, res) => {
       })
       .populate("followers", "name profilepic")
       .populate("following", "name profilepic");
-      console.log(user);
+      // console.log(user);
     if (!user) return res.redirect("/login");
    
 

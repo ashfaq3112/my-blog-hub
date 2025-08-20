@@ -53,10 +53,10 @@
       <% if (user && user._id.toString() !== post.user._id.toString()) { %>
         <button id="followBtn"
           class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold transition-all duration-300
-          <%= user.following.includes(post.user._id) 
+          <%= post.user.followers.includes(user._id) 
             ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:scale-105 hover:shadow-lg' 
             : 'glass text-white hover:bg-white/20 hover:scale-105' %>">
-          <%= user.following.includes(post.user._id) ? 'Unfollow' : 'Follow' %>
+          <%= post.user.followers.includes(user._id) ? 'Unfollow' : 'Follow' %>
         </button>
       <% } %>
     </div>
@@ -115,5 +115,6 @@
   <script src="/js/blog.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init({ duration: 800, once: true });</script>
+  <!-- <script src="js/follow.js"></script> -->
 </body>
 </html>
